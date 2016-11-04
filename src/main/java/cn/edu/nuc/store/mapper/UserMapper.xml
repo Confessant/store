@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nuc.store.dao.interfaces.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.nuc.store.entity.User">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="userMoney" jdbcType="VARCHAR" property="usermoney" />
+    <result column="friendId" jdbcType="INTEGER" property="friendid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userName, userMoney, friendId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="findPass" parameterType="String" resultType="String">
+  	SELECT userMoney from user WHERE userName=#{userName};
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.nuc.store.entity.User">
+    insert into user (userId, userName, userMoney, 
+      friendId)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{usermoney,jdbcType=VARCHAR}, 
+      #{friendid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.nuc.store.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="usermoney != null">
+        userMoney,
+      </if>
+      <if test="friendid != null">
+        friendId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="usermoney != null">
+        #{usermoney,jdbcType=VARCHAR},
+      </if>
+      <if test="friendid != null">
+        #{friendid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.nuc.store.entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="usermoney != null">
+        userMoney = #{usermoney,jdbcType=VARCHAR},
+      </if>
+      <if test="friendid != null">
+        friendId = #{friendid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.nuc.store.entity.User">
+    update user
+    set userName = #{username,jdbcType=VARCHAR},
+      userMoney = #{usermoney,jdbcType=VARCHAR},
+      friendId = #{friendid,jdbcType=INTEGER}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

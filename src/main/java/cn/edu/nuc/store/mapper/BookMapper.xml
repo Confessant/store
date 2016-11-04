@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nuc.store.dao.interfaces.BookMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.nuc.store.entity.Book">
+    <id column="bookId" jdbcType="INTEGER" property="bookid" />
+    <result column="bookName" jdbcType="VARCHAR" property="bookname" />
+    <result column="bookAuthor" jdbcType="VARCHAR" property="bookauthor" />
+    <result column="typeId" jdbcType="INTEGER" property="typeid" />
+    <result column="typeName" jdbcType="VARCHAR" property="typename" />
+    <result column="bookIMG" jdbcType="VARCHAR" property="bookimg" />
+    <result column="bookPrice" jdbcType="DOUBLE" property="bookprice" />
+    <result column="bookHot" jdbcType="INTEGER" property="bookhot" />
+    <result column="bookSimple" jdbcType="VARCHAR" property="booksimple" />
+    <result column="bookComplex" jdbcType="VARCHAR" property="bookcomplex" />
+    <result column="bookDouban" jdbcType="DOUBLE" property="bookdouban" />
+    <result column="bookNumber" jdbcType="INTEGER" property="booknumber" />
+    <result column="bookTime" jdbcType="VARCHAR" property="booktime" />
+    <result column="bookCommentsNumber" jdbcType="INTEGER" property="bookcommentsnumber" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bookId, bookName, bookAuthor, typeId, typeName, bookIMG, bookPrice, bookHot, bookSimple, 
+    bookComplex, bookDouban, bookNumber, bookTime, bookCommentsNumber
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where bookId = #{bookid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findByName" parameterType="Search" resultType="Book">
+  		SELECT * from book where bookName LIKE CONCAT('%',#{bookName},'%') LIMIT #{start},#{offset}
+  </select>
+  
+  <select id="count" parameterType="int" resultType="int">
+  	 SELECT count(*) from book
+  </select>
+  
+  <select id="hot" parameterType="int" resultType="Book">
+  	 SELECT * from book where bookHot=1
+  </select>
+  
+   <select id="countAll" parameterType="int" resultType="int">
+  	 SELECT count(*) from book
+  </select>
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book
+    where bookId = #{bookid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.nuc.store.entity.Book">
+    insert into book (bookId, bookName, bookAuthor, 
+      typeId, typeName, bookIMG, 
+      bookPrice, bookHot, bookSimple, 
+      bookComplex, bookDouban, bookNumber, 
+      bookTime, bookCommentsNumber)
+    values (#{bookid,jdbcType=INTEGER}, #{bookname,jdbcType=VARCHAR}, #{bookauthor,jdbcType=VARCHAR}, 
+      #{typeid,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR}, #{bookimg,jdbcType=VARCHAR}, 
+      #{bookprice,jdbcType=DOUBLE}, #{bookhot,jdbcType=INTEGER}, #{booksimple,jdbcType=VARCHAR}, 
+      #{bookcomplex,jdbcType=VARCHAR}, #{bookdouban,jdbcType=DOUBLE}, #{booknumber,jdbcType=INTEGER}, 
+      #{booktime,jdbcType=VARCHAR}, #{bookcommentsnumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.nuc.store.entity.Book">
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookid != null">
+        bookId,
+      </if>
+      <if test="bookname != null">
+        bookName,
+      </if>
+      <if test="bookauthor != null">
+        bookAuthor,
+      </if>
+      <if test="typeid != null">
+        typeId,
+      </if>
+      <if test="typename != null">
+        typeName,
+      </if>
+      <if test="bookimg != null">
+        bookIMG,
+      </if>
+      <if test="bookprice != null">
+        bookPrice,
+      </if>
+      <if test="bookhot != null">
+        bookHot,
+      </if>
+      <if test="booksimple != null">
+        bookSimple,
+      </if>
+      <if test="bookcomplex != null">
+        bookComplex,
+      </if>
+      <if test="bookdouban != null">
+        bookDouban,
+      </if>
+      <if test="booknumber != null">
+        bookNumber,
+      </if>
+      <if test="booktime != null">
+        bookTime,
+      </if>
+      <if test="bookcommentsnumber != null">
+        bookCommentsNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookid != null">
+        #{bookid,jdbcType=INTEGER},
+      </if>
+      <if test="bookname != null">
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="bookauthor != null">
+        #{bookauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="bookimg != null">
+        #{bookimg,jdbcType=VARCHAR},
+      </if>
+      <if test="bookprice != null">
+        #{bookprice,jdbcType=DOUBLE},
+      </if>
+      <if test="bookhot != null">
+        #{bookhot,jdbcType=INTEGER},
+      </if>
+      <if test="booksimple != null">
+        #{booksimple,jdbcType=VARCHAR},
+      </if>
+      <if test="bookcomplex != null">
+        #{bookcomplex,jdbcType=VARCHAR},
+      </if>
+      <if test="bookdouban != null">
+        #{bookdouban,jdbcType=DOUBLE},
+      </if>
+      <if test="booknumber != null">
+        #{booknumber,jdbcType=INTEGER},
+      </if>
+      <if test="booktime != null">
+        #{booktime,jdbcType=VARCHAR},
+      </if>
+      <if test="bookcommentsnumber != null">
+        #{bookcommentsnumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.nuc.store.entity.Book">
+    update book
+    <set>
+      <if test="bookname != null">
+        bookName = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="bookauthor != null">
+        bookAuthor = #{bookauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        typeId = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        typeName = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="bookimg != null">
+        bookIMG = #{bookimg,jdbcType=VARCHAR},
+      </if>
+      <if test="bookprice != null">
+        bookPrice = #{bookprice,jdbcType=DOUBLE},
+      </if>
+      <if test="bookhot != null">
+        bookHot = #{bookhot,jdbcType=INTEGER},
+      </if>
+      <if test="booksimple != null">
+        bookSimple = #{booksimple,jdbcType=VARCHAR},
+      </if>
+      <if test="bookcomplex != null">
+        bookComplex = #{bookcomplex,jdbcType=VARCHAR},
+      </if>
+      <if test="bookdouban != null">
+        bookDouban = #{bookdouban,jdbcType=DOUBLE},
+      </if>
+      <if test="booknumber != null">
+        bookNumber = #{booknumber,jdbcType=INTEGER},
+      </if>
+      <if test="booktime != null">
+        bookTime = #{booktime,jdbcType=VARCHAR},
+      </if>
+      <if test="bookcommentsnumber != null">
+        bookCommentsNumber = #{bookcommentsnumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bookId = #{bookid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.nuc.store.entity.Book">
+    update book
+    set bookName = #{bookname,jdbcType=VARCHAR},
+      bookAuthor = #{bookauthor,jdbcType=VARCHAR},
+      typeId = #{typeid,jdbcType=INTEGER},
+      typeName = #{typename,jdbcType=VARCHAR},
+      bookIMG = #{bookimg,jdbcType=VARCHAR},
+      bookPrice = #{bookprice,jdbcType=DOUBLE},
+      bookHot = #{bookhot,jdbcType=INTEGER},
+      bookSimple = #{booksimple,jdbcType=VARCHAR},
+      bookComplex = #{bookcomplex,jdbcType=VARCHAR},
+      bookDouban = #{bookdouban,jdbcType=DOUBLE},
+      bookNumber = #{booknumber,jdbcType=INTEGER},
+      bookTime = #{booktime,jdbcType=VARCHAR},
+      bookCommentsNumber = #{bookcommentsnumber,jdbcType=INTEGER}
+    where bookId = #{bookid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nuc.store.dao.interfaces.ReadMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.nuc.store.entity.Read">
+    <result column="bookId" jdbcType="INTEGER" property="bookid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.edu.nuc.store.entity.Read">
+    insert into read (bookId, userId)
+    values (#{bookid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.nuc.store.entity.Read">
+    insert into read
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookid != null">
+        bookId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookid != null">
+        #{bookid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

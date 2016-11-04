@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nuc.store.dao.interfaces.Collection1Mapper">
+  <resultMap id="BaseResultMap" type="cn.edu.nuc.store.entity.Collection1">
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="bookId" jdbcType="INTEGER" property="bookid" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.edu.nuc.store.entity.Collection1">
+    insert into collection (userId, bookId)
+    values (#{userid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <select id="findCollection" parameterType="String" resultType="Book">
+  SELECT
+		*
+	FROM
+		book
+	WHERE
+		bookId IN (
+			SELECT
+				bookid
+			FROM
+				collection
+			WHERE
+				userId IN (
+					SELECT
+						userId
+					FROM
+						USER
+					WHERE
+						userName = #{userName}
+				)
+		)
+  </select>
+  
+  
+  
+  <insert id="insertSelective" parameterType="cn.edu.nuc.store.entity.Collection1">
+    insert into collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="bookid != null">
+        bookId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
